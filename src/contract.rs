@@ -17,10 +17,10 @@ use cw20_base::contract::{
     query_token_info,
 };
 use cw20_base::enumerable::{query_all_accounts, query_owner_allowances};
-use cw20_base::state::{MinterData, TokenInfo, TOKEN_INFO};
+use cw20_base::state::{BALANCES, MinterData, TokenInfo, TOKEN_INFO};
 
 // version info for migration info
-const CONTRACT_NAME: &str = "crates.io:cw-wrap";
+const CONTRACT_NAME: &str = "crates.io:cw20-wrap";
 const CONTRACT_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 #[cfg_attr(not(feature = "library"), entry_point)]
@@ -118,7 +118,7 @@ pub fn try_deposit(deps: DepsMut, env: Env, info: MessageInfo) -> Result<Respons
         .funds
         .iter()
         .find(|x| x.denom == state.native_coin)
-        .ok_or(ContractError::EmptyBalance {
+        .ok_or(ContractError::InvalidDeposit {
             denom: state.native_coin,
         })?;
 
@@ -149,9 +149,21 @@ pub fn try_withdraw(
 ) -> Result<Response, ContractError> {
     let state = STATE.load(deps.storage)?;
 
+    // Ensure user has balance sufficient to cover withdrawal
+    let balance = BALANCES
+        .may_load(deps.storage, &info.sender)?
+        .unwrap_or_default();
+    if u128::from(amount) > u128::from(balance) {
+        return Err(ContractError::InvalidWithdrawal {
+            withdrawal: amount.into(),
+            balance: balance.into(),
+        });
+    }
+
+    // Burn coins
     execute_burn(deps, env, info.clone(), amount)?;
 
-    // return native coin
+    // Return native coin
     let bank_send = CosmosMsg::Bank(BankMsg::Send {
         to_address: info.sender.clone().into(),
         amount: vec![Coin::new(amount.into(), state.native_coin)],
@@ -192,18 +204,18 @@ mod tests {
     use cosmwasm_std::testing::{
         mock_dependencies, mock_dependencies_with_balance, mock_env, mock_info,
     };
-    use cosmwasm_std::{coin, coins, from_binary, SubMsg};
     use cw20::BalanceResponse;
+    use cosmwasm_std::{coin, coins, from_binary, SubMsg};
 
     #[test]
     fn proper_initialization() {
         let mut deps = mock_dependencies();
 
         let msg = InstantiateMsg {
-            native_coin: "juno".into(),
-            name: "wjuno".into(),
-            decimals: 6.into(),
-            symbol: "WJUNO".into(),
+            native_coin: "aarch".into(),
+            name: "warch".into(),
+            decimals: 18.into(),
+            symbol: "wARCH".into(),
         };
         let info = mock_info("creator", &[]);
 
@@ -217,10 +229,10 @@ mod tests {
         let mut deps = mock_dependencies();
 
         let msg = InstantiateMsg {
-            native_coin: "juno".into(),
-            name: "wjuno".into(),
-            decimals: 6.into(),
-            symbol: "WJUNO".into(),
+            native_coin: "aarch".into(),
+            name: "warch".into(),
+            decimals: 18.into(),
+            symbol: "wARCH".into(),
         };
         let info = mock_info("creator", &[]);
         let env = mock_env();
@@ -233,12 +245,12 @@ mod tests {
         let info = mock_info("anyone", &coins(10, "btc"));
         let err = try_deposit(deps.as_mut(), env, info).unwrap_err();
         match err {
-            ContractError::EmptyBalance { .. } => {}
+            ContractError::InvalidDeposit { .. } => {}
             e => panic!("unexpected error: {:?}", e),
         }
 
         // valid coin
-        let info = mock_info("creator", &coins(20, "juno"));
+        let info = mock_info("creator", &coins(10000000000000000000_u128, "aarch")); // 10 ARCH
         let env = mock_env();
         let res = try_deposit(deps.as_mut(), env.clone(), info).unwrap();
         assert_eq!(res.messages.len(), 0);
@@ -253,7 +265,7 @@ mod tests {
         )
         .unwrap();
         let response: BalanceResponse = from_binary(&data).unwrap();
-        assert_eq!(response.balance, Uint128::from(20u8));
+        assert_eq!(response.balance, Uint128::from(10000000000000000000_u128));
     }
 
     #[test]
@@ -261,37 +273,75 @@ mod tests {
         let mut deps = mock_dependencies_with_balance(&coins(1000u32.into(), "juno"));
 
         let msg = InstantiateMsg {
-            native_coin: "juno".into(),
-            name: "wjuno".into(),
-            decimals: 6.into(),
-            symbol: "WJUNO".into(),
+            native_coin: "aarch".into(),
+            name: "warch".into(),
+            decimals: 18.into(),
+            symbol: "wARCH".into(),
         };
         let info = mock_info("creator", &[]);
 
-        // we can just call .unwrap() to assert this was a success
+        // Just call .unwrap() to assert this was a success
         let res = instantiate(deps.as_mut(), mock_env(), info, msg).unwrap();
         assert_eq!(0, res.messages.len());
 
-        // deposit
+        // Deposit
         let env = mock_env();
-        let amount_deposit = 5u8;
-        let info = mock_info("creator", &coins(amount_deposit.into(), "juno"));
+        let amount_deposit = 5000000000000000000_u128; // 5 ARCH
+        let info = mock_info("creator", &coins(amount_deposit.into(), "aarch"));
         let res = try_deposit(deps.as_mut(), env.clone(), info).unwrap();
         assert_eq!(res.messages.len(), 0);
 
-        // withdraw
+        // Random cannot withdraw
+        let info = mock_info("random", &[]);
+        let amount_withdraw = 5000000000000000000_u128; // 5 ARCH
+        let err = try_withdraw(deps.as_mut(), env.clone(), info, amount_withdraw.into());
+        assert!(err.is_err());
+
+        // Owner cannot withdraw more funds than available
         let info = mock_info("creator", &[]);
-        let amount_withdraw = 4u8;
+        let amount_withdraw = 10000000000000000000_u128; // 10 ARCH
+        let err = try_withdraw(deps.as_mut(), env.clone(), info, amount_withdraw.into());
+        assert!(err.is_err());
+        
+
+        // Owner can withdraw less funds than available
+        let info = mock_info("creator", &[]);
+        let amount_withdraw = 4000000000000000000_u128; // 4 ARCH
         let res = try_withdraw(deps.as_mut(), env.clone(), info, amount_withdraw.into()).unwrap();
         assert_eq!(1, res.messages.len());
         assert_eq!(
             res.messages[0],
             SubMsg::new(CosmosMsg::Bank(BankMsg::Send {
-                amount: vec![coin(amount_withdraw.into(), "juno")],
+                amount: vec![coin(amount_withdraw.into(), "aarch")],
                 to_address: "creator".into(),
             }))
         );
+        // check balance query
+        let data = query(
+            deps.as_ref(),
+            env.clone(),
+            QueryMsg::Balance {
+                address: String::from("creator"),
+            },
+        ).unwrap();
+        let balance_response: BalanceResponse = from_binary(&data).unwrap();
+        assert_eq!(
+            balance_response.balance,
+            Uint128::from(1000000000000000000_u128) // 1 ARCH remains to be withdrawn
+        );
 
+        // Owner can withdraw exact funds available
+        let info = mock_info("creator", &[]);
+        let amount_withdraw = 1000000000000000000_u128; // 1 ARCH
+        let res = try_withdraw(deps.as_mut(), env.clone(), info, amount_withdraw.into()).unwrap();
+        assert_eq!(1, res.messages.len());
+        assert_eq!(
+            res.messages[0],
+            SubMsg::new(CosmosMsg::Bank(BankMsg::Send {
+                amount: vec![coin(amount_withdraw.into(), "aarch")],
+                to_address: "creator".into(),
+            }))
+        );
         // check balance query
         let data = query(
             deps.as_ref(),
@@ -299,12 +349,11 @@ mod tests {
             QueryMsg::Balance {
                 address: String::from("creator"),
             },
-        )
-        .unwrap();
-        let response: BalanceResponse = from_binary(&data).unwrap();
+        ).unwrap();
+        let balance_response: BalanceResponse = from_binary(&data).unwrap();
         assert_eq!(
-            response.balance,
-            Uint128::from(amount_deposit - amount_withdraw)
+            balance_response.balance,
+            Uint128::from(0_u8) // All ARCH withdrawn
         );
     }
 }

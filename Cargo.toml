@@ -11,6 +11,7 @@ repository = "https://github.com/archid-protocol/cw20-wrap"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
+doctest = false
 
 [features]
 # for more explicit tests, cargo test --features=backtraces

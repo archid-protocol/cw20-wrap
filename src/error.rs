@@ -12,8 +12,13 @@ pub enum ContractError {
 
     #[error("Unauthorized")]
     Unauthorized {},
-    // Add any other custom errors you like here.
-    // Look at https://docs.rs/thiserror/1.0.21/thiserror/ for details.
+
     #[error("No {denom} tokens sent")]
-    EmptyBalance { denom: String },
+    InvalidDeposit { denom: String },
+
+    #[error("{withdrawal} exceeds balance of {balance}")]
+    InvalidWithdrawal { 
+        withdrawal: String,
+        balance: String,
+    },
 }
