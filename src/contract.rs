@@ -177,13 +177,18 @@ mod tests {
         let res = instantiate(deps.as_mut(), mock_env(), info, msg).unwrap();
         assert_eq!(0, res.messages.len());
 
-        // Deposit invalid coin
+        // Depositing invalid coin fails
         let env = mock_env();
         let info = mock_info("anyone", &coins(10, "btc"));
         let err = try_deposit(deps.as_mut(), env.clone(), info);
         assert!(err.is_err());
 
-        // Deposit valid coin
+        // Deposits of 0 aarch fail
+        let info = mock_info("creator", &coins(0_u128, "aarch")); // 0 ARCH
+        let err = try_deposit(deps.as_mut(), env.clone(), info);
+        assert!(err.is_err());
+
+        // Depositing a positive amount of aarch succeeds
         let info = mock_info("creator", &coins(10000000000000000000_u128, "aarch")); // 10 ARCH
         let res = try_deposit(deps.as_mut(), env.clone(), info).unwrap();
         assert_eq!(res.messages.len(), 0);

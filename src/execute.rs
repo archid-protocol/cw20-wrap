@@ -16,8 +16,14 @@ pub fn try_deposit(deps: DepsMut, env: Env, info: MessageInfo) -> Result<Respons
         .iter()
         .find(|x| x.denom == state.native_coin)
         .ok_or(ContractError::InvalidDeposit {
-            denom: state.native_coin,
+            denom: state.native_coin.clone(),
         })?;
+    
+    if u128::from(deposit.amount) == 0_u128 {
+       return Err(ContractError::InvalidDeposit {
+            denom: state.native_coin,
+        })
+    }
 
     let sub_info = MessageInfo {
         sender: env.contract.address.clone(),
