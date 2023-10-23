@@ -1,42 +1,79 @@
 {
-    "name": "cw20-wrap",
-    "developer": {
-      "archwayd": {
-        "docker": false
-      },
-      "scripts": {
-        "test": "cargo unit-test",
-        "build": "cargo build",
-        "optimize": "cargo run-script optimize",
-        "wasm": "cargo wasm",
-        "query": "archwayd query wasm",
-        "tx": "archwayd tx wasm execute"
-      },
-      "deployments": []
+  "name": "cw20-wrap",
+  "developer": {
+    "archwayd": {
+      "docker": false
     },
-    "network": {
-      "name": "Archway",
-      "chainId": "constantine-3",
-      "type": "testnet",
-      "fees": {
-        "feeDenom": "aconst"
-      },
-      "gas": {
-        "prices": "0.002aconst",
-        "mode": "auto",
-        "adjustment": "1.5"
-      },
-      "wasm": {
-        "bech32Hrp": "archway",
-        "archwayd": "4.0.2",
-        "configDir": ".archway",
-        "binary": "archwayd"
-      },
-      "urls": {
-        "rpc": {
-          "url": "https://rpc.constantine.archway.tech",
-          "port": 443
+    "scripts": {
+      "test": "cargo unit-test",
+      "build": "cargo build",
+      "optimize": "cargo run-script optimize",
+      "wasm": "cargo wasm",
+      "query": "archwayd query wasm",
+      "tx": "archwayd tx wasm execute"
+    },
+    "deployments": [
+      {
+        "project": "cw20-wrap",
+        "type": "set-metadata",
+        "chainId": "constantine-3",
+        "codeId": 1574,
+        "txhash": "B0E98759EFFB2C2FBC70B6E321C3919D687F72E689F458F958C0F841E990AE5A",
+        "contract": "archway1jcahx3ruep9zwrhefwkdnuxrhk44w9zedeef0eg9pg3wjj66zyps9z2jrv",
+        "contractMetadata": {
+          "ownerAddress": "archway1f395p0gg67mmfd5zcqvpnp9cxnu0hg6r9hfczq",
+          "rewardsAddress": "archway1f395p0gg67mmfd5zcqvpnp9cxnu0hg6r9hfczq"
         }
+      },
+      {
+        "project": "cw20-wrap",
+        "type": "instantiate",
+        "chainId": "constantine-3",
+        "codeId": 1574,
+        "txhash": "C8570C8BA1485AC6921D5B2AB721C5E00EFC4D7E2CFC93CB796F4F9B014B42FE",
+        "address": "archway1jcahx3ruep9zwrhefwkdnuxrhk44w9zedeef0eg9pg3wjj66zyps9z2jrv",
+        "admin": "archway1f395p0gg67mmfd5zcqvpnp9cxnu0hg6r9hfczq",
+        "label": "cw20-wrap 0.0.1",
+        "args": {
+          "native_coin": "aarch",
+          "name": "Wrapped ARCH",
+          "decimals": 18,
+          "symbol": "wARCH"
+        }
+      },
+      {
+        "project": "cw20-wrap",
+        "type": "store",
+        "chainId": "constantine-3",
+        "codeId": 1574,
+        "checksum": "e35bd186cf10a5cc3bae03316ed1f535982dd21041f2814cb38c1995789ea514",
+        "txhash": "BDAEF1A39BAC4A4B549DC400811029F63CAB2F4EA31A9033462888BA621EAEFA"
+      }
+    ]
+  },
+  "network": {
+    "name": "Archway",
+    "chainId": "constantine-3",
+    "type": "testnet",
+    "fees": {
+      "feeDenom": "aconst"
+    },
+    "gas": {
+      "prices": "0.002aconst",
+      "mode": "auto",
+      "adjustment": "1.5"
+    },
+    "wasm": {
+      "bech32Hrp": "archway",
+      "archwayd": "4.0.2",
+      "configDir": ".archway",
+      "binary": "archwayd"
+    },
+    "urls": {
+      "rpc": {
+        "url": "https://rpc.constantine.archway.tech",
+        "port": 443
       }
     }
   }
+}
