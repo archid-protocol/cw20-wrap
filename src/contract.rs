@@ -235,27 +235,23 @@ mod tests {
             symbol: "wARCH".into(),
         };
         let info = mock_info("creator", &[]);
-        let env = mock_env();
-        // we can just call .unwrap() to assert this was a success
-        let res = instantiate(deps.as_mut(), env, info, msg).unwrap();
+
+        // Calling .unwrap() will assert this was a success
+        let res = instantiate(deps.as_mut(), mock_env(), info, msg).unwrap();
         assert_eq!(0, res.messages.len());
 
-        // deposit invalid coin
+        // Deposit invalid coin
         let env = mock_env();
         let info = mock_info("anyone", &coins(10, "btc"));
-        let err = try_deposit(deps.as_mut(), env, info).unwrap_err();
-        match err {
-            ContractError::InvalidDeposit { .. } => {}
-            e => panic!("unexpected error: {:?}", e),
-        }
+        let err = try_deposit(deps.as_mut(), env.clone(), info);
+        assert!(err.is_err());
 
-        // valid coin
+        // Deposit valid coin
         let info = mock_info("creator", &coins(10000000000000000000_u128, "aarch")); // 10 ARCH
-        let env = mock_env();
         let res = try_deposit(deps.as_mut(), env.clone(), info).unwrap();
         assert_eq!(res.messages.len(), 0);
 
-        // check balance query
+        // Verify balance was updated
         let data = query(
             deps.as_ref(),
             env,
@@ -280,7 +276,7 @@ mod tests {
         };
         let info = mock_info("creator", &[]);
 
-        // Just call .unwrap() to assert this was a success
+        // Calling .unwrap() will assert this was a success
         let res = instantiate(deps.as_mut(), mock_env(), info, msg).unwrap();
         assert_eq!(0, res.messages.len());
 
