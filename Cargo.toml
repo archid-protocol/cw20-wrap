@@ -1,0 +1,31 @@
+[package]
+name = "cw20-wrap"
+version = "0.0.1"
+authors = [
+    "Giancarlos Salas <giansalex@gmail.com>",
+    "Drew Taylor <drew.taylor@philabs.xyz>"
+]
+edition = "2018"
+description = "CosmWasm contract for wrapping native coins into cw20"
+repository = "https://github.com/archid-protocol/cw20-wrap"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+# for more explicit tests, cargo test --features=backtraces
+backtraces = ["cosmwasm-std/backtraces"]
+# use library feature to disable all instantiate/execute/query exports
+library = []
+
+[dependencies]
+cosmwasm-schema = "1.1.0"
+cosmwasm-std = "1.1.0"
+cosmwasm-storage = "1.1.0"
+cw-storage-plus = "1.1.0"
+cw2 = "1.1.0"
+cw20 = "1.1.0"
+cw20-base = { version = "1.1.0", features = ["library"]}
+schemars = "0.8"
+serde = { version = "1.0", default-features = false, features = ["derive"] }
+thiserror = { version = "1.0" }
