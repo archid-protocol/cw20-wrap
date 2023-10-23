@@ -9,6 +9,13 @@ edition = "2018"
 description = "CosmWasm contract for wrapping native coins into cw20"
 repository = "https://github.com/archid-protocol/cw20-wrap"
 
+
+exclude = [
+  # Those files are rust-optimizer artifacts. You might want to commit them for convenience but they should not be part of the source code publication.
+  "contract.wasm",
+  "hash.txt",
+]
+
 [lib]
 crate-type = ["cdylib", "rlib"]
 doctest = false
@@ -18,6 +25,25 @@ doctest = false
 backtraces = ["cosmwasm-std/backtraces"]
 # use library feature to disable all instantiate/execute/query exports
 library = []
+
+[package.metadata.scripts]
+optimize = """docker run --rm -v "$(pwd)":/code \
+  -e CARGO_TERM_COLOR=always \
+  --mount type=volume,source="$(basename "$(pwd)")_cache",target=/code/target \
+  --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
+  cosmwasm/rust-optimizer:0.12.5
+"""
+
+[profile.release]
+opt-level = 3
+debug = false
+rpath = false
+lto = true
+debug-assertions = false
+codegen-units = 1
+panic = 'abort'
+incremental = false
+overflow-checks = true
 
 [dependencies]
 cosmwasm-schema = "1.1.0"

@@ -219,7 +219,7 @@ mod tests {
         };
         let info = mock_info("creator", &[]);
 
-        // we can just call .unwrap() to assert this was a success
+        // Calling .unwrap() will assert this was a success
         let res = instantiate(deps.as_mut(), mock_env(), info, msg).unwrap();
         assert_eq!(0, res.messages.len());
     }
