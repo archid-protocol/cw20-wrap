@@ -1,0 +1,42 @@
+{
+    "name": "cw20-wrap",
+    "developer": {
+      "archwayd": {
+        "docker": false
+      },
+      "scripts": {
+        "test": "cargo unit-test",
+        "build": "cargo build",
+        "optimize": "cargo run-script optimize",
+        "wasm": "cargo wasm",
+        "query": "archwayd query wasm",
+        "tx": "archwayd tx wasm execute"
+      },
+      "deployments": []
+    },
+    "network": {
+      "name": "Archway",
+      "chainId": "constantine-3",
+      "type": "testnet",
+      "fees": {
+        "feeDenom": "aconst"
+      },
+      "gas": {
+        "prices": "0.002aconst",
+        "mode": "auto",
+        "adjustment": "1.5"
+      },
+      "wasm": {
+        "bech32Hrp": "archway",
+        "archwayd": "4.0.2",
+        "configDir": ".archway",
+        "binary": "archwayd"
+      },
+      "urls": {
+        "rpc": {
+          "url": "https://rpc.constantine.archway.tech",
+          "port": 443
+        }
+      }
+    }
+  }
