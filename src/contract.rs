@@ -298,7 +298,6 @@ mod tests {
         let amount_withdraw = 10000000000000000000_u128; // 10 ARCH
         let err = try_withdraw(deps.as_mut(), env.clone(), info, amount_withdraw.into());
         assert!(err.is_err());
-        
 
         // Owner can withdraw less funds than available
         let info = mock_info("creator", &[]);
@@ -312,7 +311,6 @@ mod tests {
                 to_address: "creator".into(),
             }))
         );
-        // check balance query
         let data = query(
             deps.as_ref(),
             env.clone(),
@@ -338,7 +336,6 @@ mod tests {
                 to_address: "creator".into(),
             }))
         );
-        // check balance query
         let data = query(
             deps.as_ref(),
             env,
