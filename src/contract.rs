@@ -150,9 +150,9 @@ mod tests {
 
         let msg = InstantiateMsg {
             native_coin: "aarch".into(),
-            name: "warch".into(),
+            name: "wrapped arch".into(),
             decimals: 18.into(),
-            symbol: "wARCH".into(),
+            symbol: "WARCH".into(),
         };
         let info = mock_info("creator", &[]);
 
@@ -167,9 +167,9 @@ mod tests {
 
         let msg = InstantiateMsg {
             native_coin: "aarch".into(),
-            name: "warch".into(),
+            name: "wrapped arch".into(),
             decimals: 18.into(),
-            symbol: "wARCH".into(),
+            symbol: "WARCH".into(),
         };
         let info = mock_info("creator", &[]);
 
@@ -208,13 +208,13 @@ mod tests {
 
     #[test]
     fn withdraw() {
-        let mut deps = mock_dependencies_with_balance(&coins(1000u32.into(), "juno"));
+        let mut deps = mock_dependencies_with_balance(&coins(1000u32.into(), "arch_owner"));
 
         let msg = InstantiateMsg {
             native_coin: "aarch".into(),
-            name: "warch".into(),
+            name: "wrapped arch".into(),
             decimals: 18.into(),
-            symbol: "wARCH".into(),
+            symbol: "WARCH".into(),
         };
         let info = mock_info("creator", &[]);
 
