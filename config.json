@@ -18,6 +18,34 @@
         "type": "set-metadata",
         "chainId": "constantine-3",
         "codeId": 1574,
+        "txhash": "33A44CDE928D4E01A9C6A981C22CC3BE24DAB2603454C73E2EA1F12F26DA9FBD",
+        "contract": "archway1dz6h2smr432gvzruklk3lps7ak2ca7cngdge4vym93wehkkypwpqgwr2q2",
+        "contractMetadata": {
+          "ownerAddress": "archway1f395p0gg67mmfd5zcqvpnp9cxnu0hg6r9hfczq",
+          "rewardsAddress": "archway1f395p0gg67mmfd5zcqvpnp9cxnu0hg6r9hfczq"
+        }
+      },
+      {
+        "project": "cw20-wrap",
+        "type": "instantiate",
+        "chainId": "constantine-3",
+        "codeId": 1574,
+        "txhash": "092B9687F40CE7F64A0BBCD18206B63813DB203EDB6E08D61B75F6FB71FB494E",
+        "address": "archway1dz6h2smr432gvzruklk3lps7ak2ca7cngdge4vym93wehkkypwpqgwr2q2",
+        "admin": "archway1f395p0gg67mmfd5zcqvpnp9cxnu0hg6r9hfczq",
+        "label": "cw20-wrap 0.0.1",
+        "args": {
+          "native_coin": "aconst",
+          "name": "Wrapped ARCH",
+          "decimals": 18,
+          "symbol": "wARCH"
+        }
+      },
+      {
+        "project": "cw20-wrap",
+        "type": "set-metadata",
+        "chainId": "constantine-3",
+        "codeId": 1574,
         "txhash": "B0E98759EFFB2C2FBC70B6E321C3919D687F72E689F458F958C0F841E990AE5A",
         "contract": "archway1jcahx3ruep9zwrhefwkdnuxrhk44w9zedeef0eg9pg3wjj66zyps9z2jrv",
         "contractMetadata": {
