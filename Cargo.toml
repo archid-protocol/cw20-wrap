@@ -8,7 +8,8 @@ authors = [
 edition = "2021"
 description = "CosmWasm contract for wrapping native coins into cw20"
 repository = "https://github.com/archid-protocol/cw20-wrap"
-
+keywords = ["cw20", "CosmWasm", "wrapped tokens"]
+license = "Apache-2.0"
 
 exclude = [
   # Those files are rust-optimizer artifacts. You might want to commit them for convenience but they should not be part of the source code publication.
