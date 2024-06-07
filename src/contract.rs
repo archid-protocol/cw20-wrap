@@ -20,7 +20,7 @@ use crate::execute::{ try_deposit, try_withdraw };
 use crate::msg::{ExecuteMsg, InstantiateMsg, QueryMsg};
 use crate::state::{State, STATE};
 
-// version info for migration info
+// Contract metadata
 const CONTRACT_NAME: &str = "crates.io:cw20-wrap";
 const CONTRACT_VERSION: &str = env!("CARGO_PKG_VERSION");
 
