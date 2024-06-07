@@ -16,6 +16,43 @@
       {
         "project": "cw20-wrap",
         "type": "set-metadata",
+        "chainId": "archway-1",
+        "codeId": 513,
+        "txhash": "DDECF298EA381F22CA204E31F1B22AF404A95B2C291F8934FF2E87DC9F666118",
+        "contract": "archway1msc3fa4e2mh73y760qmjd3wfkzr98nl26f36xgt2xnhuw6ay3scs42zeue",
+        "contractMetadata": {
+          "ownerAddress": "archway1f395p0gg67mmfd5zcqvpnp9cxnu0hg6r9hfczq",
+          "rewardsAddress": "archway1e0cwfmla7exa578xddl87paxexw9ymwrzysfjms8c2mstxjkldlq53g5s4",
+          "withdrawToWallet": true
+        }
+      },
+      {
+        "project": "cw20-wrap",
+        "type": "instantiate",
+        "chainId": "archway-1",
+        "codeId": 513,
+        "txhash": "8F3EC5002D32F008321E8651FF51C4D92E0B88F1BC02988A7C455A891AC9B252",
+        "address": "archway1msc3fa4e2mh73y760qmjd3wfkzr98nl26f36xgt2xnhuw6ay3scs42zeue",
+        "admin": "archway1f395p0gg67mmfd5zcqvpnp9cxnu0hg6r9hfczq",
+        "label": "Wrapped ARCH",
+        "args": {
+          "native_coin": "aarch",
+          "name": "Wrapped ARCH",
+          "decimals": 18,
+          "symbol": "wARCH"
+        }
+      },
+      {
+        "project": "cw20-wrap",
+        "type": "store",
+        "chainId": "archway-1",
+        "codeId": 513,
+        "checksum": "1f7309b572ab27405240ddbb160a30e3a1de9d046c566fc44cc030f51ae38f26",
+        "txhash": "108E6AAB67904EB46A707A919D51A100F1D250CEAE4B5E32947EDAB477E8CDAF"
+      },
+      {
+        "project": "cw20-wrap",
+        "type": "set-metadata",
         "chainId": "constantine-3",
         "codeId": 1574,
         "txhash": "33A44CDE928D4E01A9C6A981C22CC3BE24DAB2603454C73E2EA1F12F26DA9FBD",
