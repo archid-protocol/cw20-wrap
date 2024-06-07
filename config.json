@@ -81,25 +81,25 @@
   },
   "network": {
     "name": "Archway",
-    "chainId": "constantine-3",
-    "type": "testnet",
+    "chainId": "archway-1",
+    "type": "mainnet",
     "fees": {
-      "feeDenom": "aconst"
+      "feeDenom": "aarch"
     },
     "gas": {
-      "prices": "0.002aconst",
+      "prices": "900000000000.000000000000000000aarch",
       "mode": "auto",
-      "adjustment": "1.5"
+      "adjustment": 1.4
     },
     "wasm": {
       "bech32Hrp": "archway",
-      "archwayd": "4.0.2",
+      "archwayd": "1.0.1",
       "configDir": ".archway",
       "binary": "archwayd"
     },
     "urls": {
       "rpc": {
-        "url": "https://rpc.constantine.archway.tech",
+        "url": "https://rpc.mainnet.archway.io",
         "port": 443
       }
     }
