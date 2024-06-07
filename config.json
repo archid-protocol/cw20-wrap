@@ -15,6 +15,13 @@
     "deployments": [
       {
         "project": "cw20-wrap",
+        "type": "clear-contract-admin",
+        "chainId": "archway-1",
+        "contract": "archway1msc3fa4e2mh73y760qmjd3wfkzr98nl26f36xgt2xnhuw6ay3scs42zeue",
+        "txhash": "9C9727C1AF12942A5B87647E85B8DFE69294B369F1C21C5E9354BEA8FB898A77"
+      },
+      {
+        "project": "cw20-wrap",
         "type": "set-metadata",
         "chainId": "archway-1",
         "codeId": 513,
