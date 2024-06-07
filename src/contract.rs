@@ -1,5 +1,5 @@
 use cosmwasm_std::{
-    entry_point, to_binary, Binary, Deps, DepsMut, Env, MessageInfo,
+    entry_point, to_json_binary, Binary, Deps, DepsMut, Env, MessageInfo,
     Response, StdResult, Uint128,
 };
 
@@ -116,19 +116,19 @@ pub fn execute(
 pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
     match msg {
         // cw20 standard
-        QueryMsg::Balance { address } => to_binary(&query_balance(deps, address)?),
-        QueryMsg::TokenInfo {} => to_binary(&query_token_info(deps)?),
-        QueryMsg::Minter {} => to_binary(&query_minter(deps)?),
+        QueryMsg::Balance { address } => to_json_binary(&query_balance(deps, address)?),
+        QueryMsg::TokenInfo {} => to_json_binary(&query_token_info(deps)?),
+        QueryMsg::Minter {} => to_json_binary(&query_minter(deps)?),
         QueryMsg::Allowance { owner, spender } => {
-            to_binary(&query_allowance(deps, owner, spender)?)
+            to_json_binary(&query_allowance(deps, owner, spender)?)
         }
         QueryMsg::AllAllowances {
             owner,
             start_after,
             limit,
-        } => to_binary(&query_owner_allowances(deps, owner, start_after, limit)?),
+        } => to_json_binary(&query_owner_allowances(deps, owner, start_after, limit)?),
         QueryMsg::AllAccounts { start_after, limit } => {
-            to_binary(&query_all_accounts(deps, start_after, limit)?)
+            to_json_binary(&query_all_accounts(deps, start_after, limit)?)
         }
     }
 }
@@ -137,7 +137,7 @@ pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
 mod tests {
     use super::*;
     use cosmwasm_std::{
-        BankMsg, coin, coins, CosmosMsg, from_binary, SubMsg
+        BankMsg, coin, coins, CosmosMsg, from_json, SubMsg
     };
     use cosmwasm_std::testing::{
         mock_dependencies, mock_dependencies_with_balance, mock_env, mock_info,
@@ -202,7 +202,7 @@ mod tests {
             },
         )
         .unwrap();
-        let response: BalanceResponse = from_binary(&data).unwrap();
+        let response: BalanceResponse = from_json(&data).unwrap();
         assert_eq!(response.balance, Uint128::from(10000000000000000000_u128));
     }
 
@@ -260,7 +260,7 @@ mod tests {
                 address: String::from("creator"),
             },
         ).unwrap();
-        let balance_response: BalanceResponse = from_binary(&data).unwrap();
+        let balance_response: BalanceResponse = from_json(&data).unwrap();
         assert_eq!(
             balance_response.balance,
             Uint128::from(1000000000000000000_u128) // 1 ARCH remains to be withdrawn
@@ -285,7 +285,7 @@ mod tests {
                 address: String::from("creator"),
             },
         ).unwrap();
-        let balance_response: BalanceResponse = from_binary(&data).unwrap();
+        let balance_response: BalanceResponse = from_json(&data).unwrap();
         assert_eq!(
             balance_response.balance,
             Uint128::from(0_u8) // All ARCH withdrawn
