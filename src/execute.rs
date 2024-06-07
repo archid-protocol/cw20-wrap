@@ -1,9 +1,6 @@
-use cosmwasm_std::{
-    BankMsg, Coin, CosmosMsg, DepsMut, Env, MessageInfo,
-    Response, Uint128,
-};
+use cosmwasm_std::{BankMsg, Coin, CosmosMsg, DepsMut, Env, MessageInfo, Response, Uint128};
 use cw20_base::contract::{execute_burn, execute_mint};
-use cw20_base::state::{BALANCES};
+use cw20_base::state::BALANCES;
 
 use crate::error::ContractError;
 use crate::state::STATE;
@@ -18,11 +15,11 @@ pub fn try_deposit(deps: DepsMut, env: Env, info: MessageInfo) -> Result<Respons
         .ok_or(ContractError::InvalidDeposit {
             denom: state.native_coin.clone(),
         })?;
-    
+
     if u128::from(deposit.amount) == 0_u128 {
-       return Err(ContractError::InvalidDeposit {
+        return Err(ContractError::InvalidDeposit {
             denom: state.native_coin,
-        })
+        });
     }
 
     let sub_info = MessageInfo {

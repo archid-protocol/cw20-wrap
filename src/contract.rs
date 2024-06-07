@@ -1,6 +1,6 @@
 use cosmwasm_std::{
-    entry_point, to_json_binary, Binary, Deps, DepsMut, Env, MessageInfo,
-    Response, StdResult, Uint128,
+    entry_point, to_json_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response, StdResult,
+    Uint128,
 };
 
 use cw2::set_contract_version;
@@ -9,14 +9,13 @@ use cw20_base::allowances::{
     execute_transfer_from, query_allowance,
 };
 use cw20_base::contract::{
-    execute_burn, execute_send, execute_transfer, query_balance, query_minter,
-    query_token_info,
+    execute_burn, execute_send, execute_transfer, query_balance, query_minter, query_token_info,
 };
 use cw20_base::enumerable::{query_all_accounts, query_owner_allowances};
 use cw20_base::state::{MinterData, TokenInfo, TOKEN_INFO};
 
 use crate::error::ContractError;
-use crate::execute::{ try_deposit, try_withdraw };
+use crate::execute::{try_deposit, try_withdraw};
 use crate::msg::{ExecuteMsg, InstantiateMsg, QueryMsg};
 use crate::state::{State, STATE};
 
@@ -136,12 +135,10 @@ pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use cosmwasm_std::{
-        BankMsg, coin, coins, CosmosMsg, from_json, SubMsg
-    };
     use cosmwasm_std::testing::{
         mock_dependencies, mock_dependencies_with_balance, mock_env, mock_info,
     };
+    use cosmwasm_std::{coin, coins, from_json, BankMsg, CosmosMsg, SubMsg};
     use cw20::BalanceResponse;
 
     #[test]
@@ -259,7 +256,8 @@ mod tests {
             QueryMsg::Balance {
                 address: String::from("creator"),
             },
-        ).unwrap();
+        )
+        .unwrap();
         let balance_response: BalanceResponse = from_json(&data).unwrap();
         assert_eq!(
             balance_response.balance,
@@ -284,7 +282,8 @@ mod tests {
             QueryMsg::Balance {
                 address: String::from("creator"),
             },
-        ).unwrap();
+        )
+        .unwrap();
         let balance_response: BalanceResponse = from_json(&data).unwrap();
         assert_eq!(
             balance_response.balance,

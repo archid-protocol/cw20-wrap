@@ -17,8 +17,5 @@ pub enum ContractError {
     InvalidDeposit { denom: String },
 
     #[error("{withdrawal} exceeds balance of {balance}")]
-    InvalidWithdrawal { 
-        withdrawal: String,
-        balance: String,
-    },
+    InvalidWithdrawal { withdrawal: String, balance: String },
 }
