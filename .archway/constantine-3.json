@@ -1,0 +1,34 @@
+{
+  "deployments": [
+    {
+      "action": "instantiate",
+      "txhash": "D89C352E77F34AF40A87BF4235F2AA8C2124937E027B9B3BAD804A7F02A6F050",
+      "wasm": {
+        "codeId": 3551
+      },
+      "contract": {
+        "name": "usdt-cw20",
+        "version": "1.0.0",
+        "address": "archway1r8kepegwhldwqanuurc769l2g0qxlsm2sm6t5rhqjzcerxsgshls267f7a",
+        "admin": "archway1mufe94s3c39grqrt8y05h90mr9gfzge4dhh5as"
+      },
+      "msg": {
+        "native_coin": "ibc/CE6B3F114B3B6EAEC14E9221A7E799B16D394C9D5D7CF644156F481A9E69EC5D",
+        "name": "Wrapped Noble USDC",
+        "symbol": "wUSDC",
+        "decimals": 6
+      }
+    },
+    {
+      "action": "store",
+      "txhash": "4D7315F74D819F0B940BFE16973B844AD342095526395B6D5BB2AE0DA4DC86FC",
+      "wasm": {
+        "codeId": 3551
+      },
+      "contract": {
+        "name": "usdt-cw20",
+        "version": "1.0.0"
+      }
+    }
+  ]
+}
