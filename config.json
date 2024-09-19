@@ -15,6 +15,22 @@
     "deployments": [
       {
         "project": "cw20-wrap",
+        "type": "instantiate",
+        "chainId": "constantine-3",
+        "codeId": 1574,
+        "txhash": "E17D86E8979415A11B0A22C7C7B0C3B2CE428C88A357B7F556C6F2AC61E51AE5",
+        "address": "archway172vetupqnkgdc7dp3gwqpvk5ljmgzyj2gs4ag2fdmp0s2rucxxsqh0nqeu",
+        "admin": "archway1dwmxvmukf2zrqwg2dha2mqyuturdkgg5k8dc4u",
+        "label": "Wrapped Noble USDC",
+        "args": {
+          "native_coin": "ibc/34F8D3402273FFA5278AE5757D81CE151ACFD4B19C494C0EE372A7229714824F",
+          "name": "Wrapped Noble USDC",
+          "decimals": 6,
+          "symbol": "wUSDC"
+        }
+      },
+      {
+        "project": "cw20-wrap",
         "type": "clear-contract-admin",
         "chainId": "archway-1",
         "contract": "archway1msc3fa4e2mh73y760qmjd3wfkzr98nl26f36xgt2xnhuw6ay3scs42zeue",
