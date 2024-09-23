@@ -15,6 +15,42 @@
     "deployments": [
       {
         "project": "cw20-wrap",
+        "type": "clear-contract-admin",
+        "chainId": "archway-1",
+        "contract": "archway1gaf9nw7n8v5lpjz9caxjpps006kxfcrzcuc8y5qp4clslhven2ns2g0ule",
+        "txhash": "595896769AA78894C5442BEEB7A4CC3AC39F0C28ED00724C86F630D69E2EE42D"
+      },
+      {
+        "project": "cw20-wrap",
+        "type": "set-metadata",
+        "chainId": "archway-1",
+        "codeId": 513,
+        "txhash": "6FD4A4BCBD735FF6E44AC14935A6E70B818A96BD435C8529E0EF88E52F0E6131",
+        "contract": "archway1gaf9nw7n8v5lpjz9caxjpps006kxfcrzcuc8y5qp4clslhven2ns2g0ule",
+        "contractMetadata": {
+          "ownerAddress": "archway1ast52tk2h3tcn6yhg64cj404c7hrkq4vgklntg",
+          "rewardsAddress": "archway1e0cwfmla7exa578xddl87paxexw9ymwrzysfjms8c2mstxjkldlq53g5s4",
+          "withdrawToWallet": true
+        }
+      },
+      {
+        "project": "cw20-wrap",
+        "type": "instantiate",
+        "chainId": "archway-1",
+        "codeId": 513,
+        "txhash": "04B1309149A696049D648D9FDFE931B5DE85B29182225C9C8B37299C9A6FEB4D",
+        "address": "archway1gaf9nw7n8v5lpjz9caxjpps006kxfcrzcuc8y5qp4clslhven2ns2g0ule",
+        "admin": "archway1ast52tk2h3tcn6yhg64cj404c7hrkq4vgklntg",
+        "label": "Wrapped Noble USDC",
+        "args": {
+          "native_coin": "ibc/43897B9739BD63E3A08A88191999C632E052724AB96BD4C74AE31375C991F48D",
+          "name": "Wrapped Noble USDC",
+          "decimals": 6,
+          "symbol": "wUSDC"
+        }
+      },
+      {
+        "project": "cw20-wrap",
         "type": "instantiate",
         "chainId": "constantine-3",
         "codeId": 1574,
